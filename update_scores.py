@@ -91,15 +91,22 @@ def fetch_wikipedia():
 
 def call_claude(wiki_content):
     """Send Wikipedia content to Claude and get scoring JSON back."""
-    payload = json.dumps({
+    # Sanitize wiki content - remove control characters that break JSON encoding
+    wiki_clean = re.sub(r'[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]', '', wiki_content)
+    # Truncate to avoid token limits
+    wiki_clean = wiki_clean[:10000]
+
+    message = {
         "model": "claude-sonnet-4-20250514",
         "max_tokens": 3000,
         "system": SYSTEM_PROMPT,
         "messages": [{
             "role": "user",
-            "content": f"Here is the current Wikipedia page for Top Chef: Carolinas. Please score all aired episodes and return the JSON.\n\n{wiki_content}"
+            "content": "Here is the current Wikipedia page for Top Chef: Carolinas. Please score all aired episodes and return the JSON.\n\n" + wiki_clean
         }]
-    }).encode("utf-8")
+    }
+
+    payload = json.dumps(message, ensure_ascii=True).encode("utf-8")
 
     req = urllib.request.Request(
         "https://api.anthropic.com/v1/messages",
@@ -112,8 +119,12 @@ def call_claude(wiki_content):
         method="POST"
     )
 
-    with urllib.request.urlopen(req, timeout=60) as resp:
-        data = json.loads(resp.read().decode("utf-8"))
+    try:
+        with urllib.request.urlopen(req, timeout=60) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+    except urllib.error.HTTPError as e:
+        error_body = e.read().decode("utf-8")
+        raise ValueError(f"API error {e.code}: {error_body}")
 
     text = "".join(b["text"] for b in data["content"] if b["type"] == "text")
     match = re.search(r"\{[\s\S]*\}", text)
@@ -215,7 +226,11 @@ if __name__ == "__main__":
     print(f"Got {len(wiki_content)} chars from Wikipedia")
 
     print("Sending to Claude for scoring...")
-    data = call_claude(wiki_content)
+    try:
+        data = call_claude(wiki_content)
+    except Exception as e:
+        print(f"❌ Claude API error: {e}")
+        raise
     print(f"Got scoring data through Episode {data['lastEpisode']}")
 
     update_html(data)
