@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Weekly Top Chef score updater.
-Calls Anthropic API with web search to get latest episode results,
+Fetches Wikipedia page directly, passes content to Claude API to score,
 then rewrites index.html with updated scores and episode summaries.
 """
 
@@ -9,9 +9,12 @@ import os
 import re
 import json
 import urllib.request
+import urllib.error
 from datetime import date
 
 API_KEY = os.environ["ANTHROPIC_API_KEY"]
+
+WIKIPEDIA_URL = "https://en.wikipedia.org/w/api.php?action=query&titles=Top_Chef:_Carolinas&prop=revisions&rvprop=content&format=json&formatversion=2"
 
 CONTESTANTS = [
     {"pick": 1,  "name": "Duyen Ha",             "team": "Cader Tots"},
@@ -31,7 +34,7 @@ CONTESTANTS = [
     {"pick": 15, "name": "Jassi Bindra",          "team": "Mom/Dad"},
 ]
 
-SYSTEM_PROMPT = """Fantasy Top Chef 2026 scoring assistant. Search Wikipedia and recent news for "Top Chef Carolinas season 23" episode results.
+SYSTEM_PROMPT = """You are a scoring assistant for Family Fantasy Top Chef 2026.
 
 Contestants: Duyen Ha, Rhoda Magbitang, Jonathan Dearden, Brandon Dearden, Jennifer Lee Jackson, Anthony Jones, Laurence Louie, Oscar Diaz, Sieger Bayer, Sherry Cardoso, Justin Tootla, Nana Araba Wilmot, Brittany Cochran, Day Joseph, Jassi Bindra.
 
@@ -51,37 +54,51 @@ Ep3: Laurence +2, Anthony +2, Brandon +1, Nana -2, Duyen -1, Rhoda -1, Jonathan 
 Ep4: Sieger +3, Laurence +1, Sherry +1, Justin +1, Jennifer 0, Anthony -1, Brittany -2
 Ep5: Brandon +1, Anthony +2, Sherry +1, Duyen +1, Laurence -1, Oscar -1, Rhoda -2
 
-Search for any episodes beyond ep5 and score them. Return ONLY raw JSON, no markdown, no explanation:
+The user will provide the raw Wikipedia page content. Use it to find any new episodes beyond ep5, score them, and return ONLY raw JSON with no markdown or explanation:
 {
   "episodes": [
     {"ep": 1, "scores": {"Chef Name": points}},
-    ...all aired episodes...
+    ...all aired episodes including eps 1-5 with verified scores above...
   ],
-  "eliminated": ["Chef Name", ...in order],
-  "lastEpisode": <number>,
+  "eliminated": ["Chef Name", ...in elimination order],
+  "lastEpisode": <number of last aired episode>,
   "summaries": [
     {
       "ep": 1,
       "title": "Episode title",
       "date": "Mon DD, YYYY",
-      "html": "Paragraph summary with inline pill spans. Use these exact span formats: <span class=\\"pill pill-qf\\">Quickfire</span> <span class=\\"pill pill-win\\">winning dish</span> <span class=\\"pill pill-top\\">top group</span> <span class=\\"pill pill-bot\\">bottom</span> <span class=\\"pill pill-elim\\">eliminated</span>. Bold chef names with <strong>Name</strong>. Write fluid narrative prose, not bullet points."
-    },
-    ...one per aired episode...
+      "html": "Paragraph summary with inline pill spans using these exact formats: <span class=\\"pill pill-qf\\">Quickfire</span> <span class=\\"pill pill-win\\">winning dish</span> <span class=\\"pill pill-top\\">top group</span> <span class=\\"pill pill-bot\\">bottom</span> <span class=\\"pill pill-elim\\">eliminated</span>. Bold chef names with <strong>Name</strong>. Write fluid narrative prose."
+    }
   ]
 }
-
-Only include non-zero scores per episode (except net-zero from offsetting scores, include those as 0)."""
-
-USER_MESSAGE = "Search for the latest Top Chef Carolinas Season 23 episode results and return the full scoring JSON."
+Only include non-zero scores per episode (include net-zero as 0 when offsetting scores cancel out)."""
 
 
-def call_api():
+def fetch_wikipedia():
+    """Fetch raw Wikipedia page content via the MediaWiki API."""
+    req = urllib.request.Request(
+        WIKIPEDIA_URL,
+        headers={"User-Agent": "TopChefFantasyScorer/1.0"}
+    )
+    with urllib.request.urlopen(req, timeout=30) as resp:
+        data = json.loads(resp.read().decode("utf-8"))
+
+    pages = data["query"]["pages"]
+    content = pages[0]["revisions"][0]["content"]
+    # Trim to first 15000 chars to stay within token limits
+    return content[:15000]
+
+
+def call_claude(wiki_content):
+    """Send Wikipedia content to Claude and get scoring JSON back."""
     payload = json.dumps({
         "model": "claude-sonnet-4-20250514",
         "max_tokens": 3000,
-        "tools": [{"type": "web_search_20250305", "name": "web_search"}],
         "system": SYSTEM_PROMPT,
-        "messages": [{"role": "user", "content": USER_MESSAGE}]
+        "messages": [{
+            "role": "user",
+            "content": f"Here is the current Wikipedia page for Top Chef: Carolinas. Please score all aired episodes and return the JSON.\n\n{wiki_content}"
+        }]
     }).encode("utf-8")
 
     req = urllib.request.Request(
@@ -91,17 +108,17 @@ def call_api():
             "Content-Type": "application/json",
             "x-api-key": API_KEY,
             "anthropic-version": "2023-06-01",
-            "anthropic-beta": "web-search-2025-03-05",
         },
         method="POST"
     )
-    with urllib.request.urlopen(req) as resp:
+
+    with urllib.request.urlopen(req, timeout=60) as resp:
         data = json.loads(resp.read().decode("utf-8"))
 
     text = "".join(b["text"] for b in data["content"] if b["type"] == "text")
     match = re.search(r"\{[\s\S]*\}", text)
     if not match:
-        raise ValueError("No JSON found in API response")
+        raise ValueError(f"No JSON found in response. Got: {text[:500]}")
     return json.loads(match.group(0))
 
 
@@ -193,7 +210,12 @@ def update_html(data):
 
 
 if __name__ == "__main__":
-    print("Fetching latest Top Chef Carolinas results...")
-    data = call_api()
-    print(f"Got data through Episode {data['lastEpisode']}")
+    print("Fetching Wikipedia page...")
+    wiki_content = fetch_wikipedia()
+    print(f"Got {len(wiki_content)} chars from Wikipedia")
+
+    print("Sending to Claude for scoring...")
+    data = call_claude(wiki_content)
+    print(f"Got scoring data through Episode {data['lastEpisode']}")
+
     update_html(data)
