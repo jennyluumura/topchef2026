@@ -178,7 +178,7 @@ def update_html(data):
     last_ep = data["lastEpisode"]
     eliminated = data["eliminated"]
 
-    # Update contestants array
+    # --- Update contestants array ---
     new_contestants = build_contestants_js(data)
     html = re.sub(
         r"const contestants = \[[\s\S]*?\];",
@@ -186,10 +186,10 @@ def update_html(data):
         html
     )
 
-    # Update activeCols
+    # --- Update activeCols ---
     html = re.sub(r"const activeCols = \d+;", f"const activeCols = {last_ep};", html)
 
-    # Update eliminatedNames
+    # --- Update eliminatedNames ---
     elim_json = json.dumps(eliminated)
     html = re.sub(
         r"const eliminatedNames = new Set\(\[.*?\]\);",
@@ -197,15 +197,21 @@ def update_html(data):
         html
     )
 
-    # Update episode summary cards
+    # --- Update episode summaries using stable markers ---
     new_cards = build_summaries_html(data)
-    html = re.sub(
-        r'(<div class="ep-summaries">)[\s\S]*?(</div>\s*\n\s*</div>\s*\n\n\s*<div class="footer">)',
-        f'<div class="ep-summaries">\n\n{new_cards}\n\n    </div>\n  </div>\n\n  <div class="footer">',
-        html
-    )
+    start_marker = '<div class="ep-summaries">'
+    end_marker = '  </div>\n\n  <div class="footer">'
 
-    # Update footer
+    start_idx = html.find(start_marker)
+    end_idx = html.find(end_marker)
+
+    if start_idx != -1 and end_idx != -1:
+        new_block = f'{start_marker}\n\n{new_cards}\n\n    </div>\n  </div>\n\n  <div class="footer">'
+        html = html[:start_idx] + new_block + html[end_idx + len(end_marker):]
+    else:
+        print("⚠️  Warning: could not find ep-summaries markers in HTML")
+
+    # --- Update footer ---
     today = date.today().strftime("%B %-d, %Y")
     html = re.sub(
         r"Updated through Episode \d+[^<]*",
