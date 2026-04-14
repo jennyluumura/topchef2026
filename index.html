@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Family Fantasy Top Chef 2026</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f5f5f3;
+      color: #1a1a1a;
+      min-height: 100vh;
+    }
+    a { color: inherit; }
+
+    /* Layout */
+    .page { max-width: 980px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 2.5rem 1rem 2rem;
+      margin-bottom: 2.5rem;
+      border-bottom: 1px solid #e0ddd6;
+    }
+    .hero-eyebrow {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #c1440e;
+      margin-bottom: 10px;
+    }
+    .hero h1 {
+      font-size: 36px;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+    .hero p {
+      font-size: 15px;
+      color: #666;
+    }
+
+    /* Section */
+    .section { margin-bottom: 3rem; }
+    .section-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 1.25rem;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #e0ddd6;
+      color: #111;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-icon {
+      width: 28px; height: 28px;
+      border-radius: 6px;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 15px;
+    }
+
+    /* Draft */
+    .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .team-card {
+      background: #fff;
+      border: 1px solid #e0ddd6;
+      border-radius: 12px;
+      padding: 1.25rem;
+      border-top: 4px solid transparent;
+    }
+    .team-momdad { border-top-color: #1a6fc4; }
+    .team-coli    { border-top-color: #1a8a5a; }
+    .team-cader   { border-top-color: #c1440e; }
+    .team-name {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+    .team-momdad .team-name { color: #1a6fc4; }
+    .team-coli .team-name   { color: #1a8a5a; }
+    .team-cader .team-name  { color: #c1440e; }
+    .pick-row {
+      display: flex; align-items: center; gap: 8px;
+      padding: 6px 0; font-size: 13px;
+      border-bottom: 1px solid #f2f2f0;
+    }
+    .pick-row:last-child { border-bottom: none; }
+    .pick-num {
+      font-size: 11px; color: #999; min-width: 22px;
+      font-weight: 600; text-align: right;
+    }
+    .pick-name { flex: 1; color: #222; }
+    .pick-name.eliminated {
+      text-decoration: line-through;
+      color: #aaa;
+    }
+    .eliminated-note {
+      font-size: 12px; color: #999;
+      margin-top: 10px; font-style: italic;
+    }
+
+    /* Rules */
+    .rules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+      gap: 10px;
+    }
+    .rule-card {
+      background: #fff;
+      border: 1px solid #e0ddd6;
+      border-radius: 10px;
+      padding: 12px 16px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .rule-letter {
+      font-size: 13px; font-weight: 700;
+      color: #999; min-width: 18px;
+    }
+    .rule-text { font-size: 13px; flex: 1; color: #333; }
+    .rule-pts { font-size: 17px; font-weight: 700; min-width: 34px; text-align: right; }
+    .pts-pos { color: #1a6fc4; }
+    .pts-neg { color: #c1440e; }
+
+    /* Scorecard */
+    .scorecard-wrap { overflow-x: auto; border-radius: 12px; border: 1px solid #e0ddd6; }
+    table.sc {
+      width: 100%; border-collapse: collapse; font-size: 13px;
+      background: #fff;
+    }
+    table.sc thead tr { background: #f8f7f4; }
+    table.sc th {
+      font-weight: 600; padding: 10px 10px;
+      text-align: center;
+      border-bottom: 2px solid #e0ddd6;
+      border-right: 1px solid #eee;
+      white-space: nowrap; font-size: 12px; color: #444;
+    }
+    table.sc th:last-child { border-right: none; }
+    table.sc th.left { text-align: left; }
+    table.sc td {
+      padding: 8px 10px;
+      border-bottom: 1px solid #f2f2f0;
+      border-right: 1px solid #f2f2f0;
+      text-align: center;
+      color: #333;
+    }
+    table.sc td:last-child { border-right: none; }
+    table.sc td.left { text-align: left; }
+    table.sc tbody tr:last-child td { border-bottom: none; }
+    table.sc tbody tr:hover td { background: #faf9f7; }
+    .badge {
+      display: inline-block; font-size: 11px; font-weight: 600;
+      padding: 2px 8px; border-radius: 20px;
+    }
+    .badge-momdad { background: #ddeeff; color: #0d4a8c; }
+    .badge-coli   { background: #d4f0e4; color: #0a5c38; }
+    .badge-cader  { background: #fde8df; color: #8c2c06; }
+    .cell-pos { color: #1a6fc4; font-weight: 600; }
+    .cell-neg { color: #c1440e; font-weight: 600; }
+    .cell-zero { color: #ccc; }
+    .ep-dim { color: #bbb; }
+
+    /* Team totals */
+    .team-totals { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .team-total-card {
+      background: #fff;
+      border: 1px solid #e0ddd6;
+      border-radius: 12px;
+      padding: 1.5rem 1.25rem;
+      text-align: center;
+      position: relative;
+    }
+    .tt-rank-badge {
+      position: absolute; top: 12px; right: 12px;
+      font-size: 11px; font-weight: 700;
+      background: #f2f2f0; color: #888;
+      padding: 2px 7px; border-radius: 20px;
+    }
+    .tt-rank-badge.gold   { background: #fff3cd; color: #7a5c00; }
+    .tt-rank-badge.silver { background: #eef0f2; color: #4a5568; }
+    .tt-rank-badge.bronze { background: #fde8df; color: #7a3010; }
+    .tt-name { font-size: 14px; color: #888; margin-bottom: 8px; font-weight: 500; }
+    .tt-score { font-size: 36px; font-weight: 700; margin-bottom: 4px; }
+    .tt-score.pos { color: #1a6fc4; }
+    .tt-score.neg { color: #c1440e; }
+    .tt-score.zero { color: #aaa; }
+    .tt-sub { font-size: 12px; color: #aaa; }
+
+    /* Episode summaries */
+    .ep-summaries { display: flex; flex-direction: column; gap: 10px; }
+    .ep-card { background: #fff; border: 1px solid #e0ddd6; border-radius: 12px; overflow: hidden; }
+    .ep-card-header { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: #f8f7f4; border-bottom: 1px solid #e0ddd6; }
+    .ep-num { font-size: 12px; font-weight: 700; background: #1a1a1a; color: #fff; padding: 2px 8px; border-radius: 20px; white-space: nowrap; }
+    .ep-title { font-size: 14px; font-weight: 600; color: #222; flex: 1; }
+    .ep-date { font-size: 12px; color: #aaa; white-space: nowrap; }
+    .ep-card-body { padding: 12px 16px; font-size: 13px; color: #333; line-height: 1.8; }
+    .pill { display: inline-block; font-size: 11px; font-weight: 700; padding: 1px 7px; border-radius: 20px; vertical-align: middle; white-space: nowrap; margin: 0 1px; }
+    .pill-qf   { background: #ddeeff; color: #0d4a8c; }
+    .pill-win  { background: #fff3cd; color: #7a5c00; }
+    .pill-top  { background: #d4f0e4; color: #0a5c38; }
+    .pill-bot  { background: #fde8df; color: #8c2c06; }
+    .pill-elim { background: #fce8e8; color: #8c0606; }
+
+    /* Footer */
+    .footer {
+      text-align: center; margin-top: 3rem;
+      padding-top: 1.5rem; border-top: 1px solid #e0ddd6;
+      font-size: 12px; color: #aaa;
+    }
+
+    @media (max-width: 640px) {
+      .hero h1 { font-size: 26px; }
+      .team-grid { grid-template-columns: 1fr; }
+      .team-totals { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <div class="hero">
+    <div class="hero-eyebrow">Season 23 · Bravo</div>
+    <h1>Family Fantasy Top Chef 2026</h1>
+    <p>Top Chef: Carolinas &nbsp;·&nbsp; Charlotte, NC &amp; Greenville, SC</p>
+  </div>
+
+  <!-- DRAFT ORDER -->
+  <div class="section">
+    <div class="section-title">
+      <span class="section-icon" style="background:#fff3cd;">🎯</span>
+      Draft order
+    </div>
+    <div class="team-grid">
+      <div class="team-card team-momdad">
+        <div class="team-name">Mom/Dad</div>
+        <div class="pick-row"><span class="pick-num">#3</span><span class="pick-name">Jonathan Dearden</span></div>
+        <div class="pick-row"><span class="pick-num">#4</span><span class="pick-name">Brandon Dearden</span></div>
+        <div class="pick-row"><span class="pick-num">#9</span><span class="pick-name">Sieger Bayer</span></div>
+        <div class="pick-row"><span class="pick-num">#10</span><span class="pick-name">Sherry Cardoso</span></div>
+        <div class="pick-row"><span class="pick-num">#15</span><span class="pick-name eliminated">Jassi Bindra</span></div>
+      </div>
+      <div class="team-card team-coli">
+        <div class="team-name">Coli-flower</div>
+        <div class="pick-row"><span class="pick-num">#2</span><span class="pick-name">Rhoda Magbitang</span></div>
+        <div class="pick-row"><span class="pick-num">#5</span><span class="pick-name">Jennifer Lee Jackson</span></div>
+        <div class="pick-row"><span class="pick-num">#8</span><span class="pick-name">Oscar Diaz</span></div>
+        <div class="pick-row"><span class="pick-num">#11</span><span class="pick-name">Justin Tootla</span></div>
+        <div class="pick-row"><span class="pick-num">#14</span><span class="pick-name eliminated">Day Joseph</span></div>
+      </div>
+      <div class="team-card team-cader">
+        <div class="team-name">Cader Tots</div>
+        <div class="pick-row"><span class="pick-num">#1</span><span class="pick-name">Duyen Ha</span></div>
+        <div class="pick-row"><span class="pick-num">#6</span><span class="pick-name">Anthony Jones</span></div>
+        <div class="pick-row"><span class="pick-num">#7</span><span class="pick-name">Laurence Louie</span></div>
+        <div class="pick-row"><span class="pick-num">#12</span><span class="pick-name eliminated">Nana Araba Wilmot</span></div>
+        <div class="pick-row"><span class="pick-num">#13</span><span class="pick-name eliminated">Brittany Cochran</span></div>
+      </div>
+    </div>
+    <p class="eliminated-note">† Strikethrough = eliminated from competition</p>
+  </div>
+
+  <!-- SCORING RULES -->
+  <div class="section">
+    <div class="section-title">
+      <span class="section-icon" style="background:#d4f0e4;">📋</span>
+      Scoring rules
+    </div>
+    <div class="rules-grid">
+      <div class="rule-card"><span class="rule-letter">A</span><span class="rule-text">Quickfire win</span><span class="rule-pts pts-pos">+1</span></div>
+      <div class="rule-card"><span class="rule-letter">B</span><span class="rule-text">Winning dish/chef</span><span class="rule-pts pts-pos">+2</span></div>
+      <div class="rule-card"><span class="rule-letter">C</span><span class="rule-text">Top group</span><span class="rule-pts pts-pos">+1</span></div>
+      <div class="rule-card"><span class="rule-letter">D</span><span class="rule-text">Bottom group</span><span class="rule-pts pts-neg">−1</span></div>
+      <div class="rule-card"><span class="rule-letter">E</span><span class="rule-text">Eliminated</span><span class="rule-pts pts-neg">−2</span></div>
+      <div class="rule-card"><span class="rule-letter">F</span><span class="rule-text">Finalist</span><span class="rule-pts pts-pos">+3</span></div>
+      <div class="rule-card"><span class="rule-letter">G</span><span class="rule-text">Winner</span><span class="rule-pts pts-pos">+5</span></div>
+    </div>
+    <p class="eliminated-note" style="margin-top:10px;">Note: winner of elimination challenge scores +2 only (not +2 and +1). Eliminated chef scores −2 only (not −2 and −1).</p>
+  </div>
+
+  <!-- SCORECARD -->
+  <div class="section">
+    <div class="section-title">
+      <span class="section-icon" style="background:#fde8df;">🏆</span>
+      Scorecard
+    </div>
+    <div class="scorecard-wrap">
+      <table class="sc" id="scorecard"></table>
+    </div>
+  </div>
+
+  <!-- TEAM TOTALS -->
+  <div class="section">
+    <div class="section-title">
+      <span class="section-icon" style="background:#ddeeff;">📊</span>
+      Team totals
+    </div>
+    <div class="team-totals" id="teamTotals"></div>
+  </div>
+
+  <!-- EPISODE SUMMARIES -->
+  <div class="section">
+    <div class="section-title">
+      <span class="section-icon" style="background:#f0e6ff;">📺</span>
+      Episode summaries
+    </div>
+    <div class="ep-summaries">
+
+      <div class="ep-card">
+        <div class="ep-card-header">
+          <span class="ep-num">Ep 1</span>
+          <span class="ep-title">Charlotte Motor Speedway</span>
+          <span class="ep-date">Mar 9, 2026</span>
+        </div>
+        <div class="ep-card-body">
+          The season opened at Charlotte Motor Speedway with NASCAR legends Kyle Busch and Jimmie Johnson as guest judges. Chefs competed in teams for the Quickfire, then drew knives for sweet potato varietals in the elimination challenge. <strong>Day Joseph's</strong> Carolina Ruby sweet potato dish suffered from undercooked fish and overpowering herbs, making her the first chef <span class="pill pill-elim">eliminated</span> — and without a shot at Last Chance Kitchen.
+        </div>
+      </div>
+
+      <div class="ep-card">
+        <div class="ep-card-header">
+          <span class="ep-num">Ep 2</span>
+          <span class="ep-title">PuckerButt</span>
+          <span class="ep-date">Mar 16, 2026</span>
+        </div>
+        <div class="ep-card-body">
+          Guest judge Mei Lin joined for a fiery episode built around Carolina Reapers. <strong>Laurence Louie</strong> took the <span class="pill pill-qf">Quickfire</span>. In the elimination, chefs created a seven-course progressively spicier dinner — <strong>Rhoda Magbitang</strong> won <span class="pill pill-win">best dish</span> with her pepper-braised short rib, while <strong>Sieger Bayer</strong> and <strong>Jennifer Lee Jackson</strong> landed in the <span class="pill pill-top">top group</span>. <strong>Nana Araba Wilmot</strong> and <strong>Justin Tootla</strong> fell to the <span class="pill pill-bot">bottom group</span>. <strong>Jassi Bindra's</strong> lamb vindaloo wasn't spicy enough and came out overcooked, sending him home <span class="pill pill-elim">eliminated</span> — also without a Last Chance Kitchen lifeline.
+        </div>
+      </div>
+
+      <div class="ep-card">
+        <div class="ep-card-header">
+          <span class="ep-num">Ep 3</span>
+          <span class="ep-title">Color &amp; Livermush</span>
+          <span class="ep-date">Mar 23, 2026</span>
+        </div>
+        <div class="ep-card-body">
+          Emeril Lagasse surprised the chefs as guest judge. <strong>Anthony Jones</strong> — a North Carolina local who knows his livermush — won the <span class="pill pill-qf">Quickfire</span>. The elimination challenge asked chefs to incorporate two naturally-dyed elements as a nod to NC's textile industry. <strong>Laurence Louie</strong> claimed the <span class="pill pill-win">winning dish</span>, with <strong>Anthony</strong> and <strong>Brandon Dearden</strong> rounding out the <span class="pill pill-top">top group</span>. Every other competing chef landed in the <span class="pill pill-bot">bottom group</span> (−1 each) in a tough judging week. <strong>Nana Araba Wilmot</strong> was <span class="pill pill-elim">eliminated</span> after failing to complete her dish with the required color elements.
+        </div>
+      </div>
+
+      <div class="ep-card">
+        <div class="ep-card-header">
+          <span class="ep-num">Ep 4</span>
+          <span class="ep-title">Pick a Side</span>
+          <span class="ep-date">Mar 30, 2026</span>
+        </div>
+        <div class="ep-card-body">
+          Season 22 winner Tristen Epps-Long returned as guest judge. The <span class="pill pill-qf">Quickfire</span> had chefs create wine-paired food flights in teams of three — the Blue Team of <strong>Sieger Bayer</strong>, <strong>Justin Tootla</strong>, and <strong>Jennifer Lee Jackson</strong> won (+1 each). In the elimination, chefs visited Deep Roots Farm then turned classic Southern side dishes into main courses. <strong>Sieger</strong> took a risk on fried okra that paid off, claiming the <span class="pill pill-win">winning dish</span> (+2). <strong>Laurence Louie</strong> and <strong>Sherry Cardoso</strong> joined him in the <span class="pill pill-top">top group</span>, while <strong>Anthony Jones</strong> and <strong>Jennifer</strong> fell to the <span class="pill pill-bot">bottom</span>. <strong>Brittany Cochran's</strong> collard greens never steamed — leaving her with raw pork and no time to recover — and she was <span class="pill pill-elim">eliminated</span>.
+        </div>
+      </div>
+
+      <div class="ep-card">
+        <div class="ep-card-header">
+          <span class="ep-num">Ep 5</span>
+          <span class="ep-title">Cut and Dry</span>
+          <span class="ep-date">Apr 6, 2026</span>
+        </div>
+        <div class="ep-card-body">
+          Comedian Fortune Feimster guest judged an improv <span class="pill pill-qf">Quickfire</span> alongside three kids, with parameters of "Christmas, Colorado, and Puffified." <strong>Brandon Dearden's</strong> Colorado vanilla ice cream with corn nut crunch won the challenge (+1). <strong>Jennifer Lee Jackson</strong> sat out the Quickfire due to a shoulder injury but was warned she cannot miss another. The elimination took chefs to the U.S. National Whitewater Center to cook dishes featuring dehydrated components. <strong>Anthony Jones'</strong> salmon was flawless, earning the <span class="pill pill-win">winning dish</span> and immunity (+2), with <strong>Sherry Cardoso</strong> and <strong>Duyen Ha</strong> in the <span class="pill pill-top">top group</span>. <strong>Laurence Louie</strong> and <strong>Oscar Diaz</strong> landed in the <span class="pill pill-bot">bottom</span>. <strong>Rhoda Magbitang's</strong> monkfish arrived raw and leeching water — a stunning fall for the chef who won the first two eliminations — and she was <span class="pill pill-elim">eliminated</span>.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="footer">
+    Updated through Episode 5 &nbsp;·&nbsp; Top Chef: Carolinas Season 23 &nbsp;·&nbsp; Last updated April 13, 2026
+  </div>
+
+</div>
+
+<script>
+const contestants = [
+  { pick: 1,  name: "Duyen Ha",             team: "Cader Tots",  pts: [ 0,  0, -1,  0,  1, 0,0,0,0,0,0,0,0,0] },
+  { pick: 2,  name: "Rhoda Magbitang",       team: "Coli-flower", pts: [ 0,  2, -1,  0, -2, 0,0,0,0,0,0,0,0,0] },
+  { pick: 3,  name: "Jonathan Dearden",      team: "Mom/Dad",     pts: [ 0,  0, -1,  0,  0, 0,0,0,0,0,0,0,0,0] },
+  { pick: 4,  name: "Brandon Dearden",       team: "Mom/Dad",     pts: [ 0,  0,  1,  0,  1, 0,0,0,0,0,0,0,0,0] },
+  { pick: 5,  name: "Jennifer Lee Jackson",  team: "Coli-flower", pts: [ 0,  1, -1,  0,  0, 0,0,0,0,0,0,0,0,0] },
+  { pick: 6,  name: "Anthony Jones",         team: "Cader Tots",  pts: [ 0,  0,  2, -1,  2, 0,0,0,0,0,0,0,0,0] },
+  { pick: 7,  name: "Laurence Louie",        team: "Cader Tots",  pts: [ 0,  1,  2,  1, -1, 0,0,0,0,0,0,0,0,0] },
+  { pick: 8,  name: "Oscar Diaz",            team: "Coli-flower", pts: [ 0,  0, -1,  0, -1, 0,0,0,0,0,0,0,0,0] },
+  { pick: 9,  name: "Sieger Bayer",          team: "Mom/Dad",     pts: [ 0,  1, -1,  3,  0, 0,0,0,0,0,0,0,0,0] },
+  { pick: 10, name: "Sherry Cardoso",        team: "Mom/Dad",     pts: [ 0,  0, -1,  1,  1, 0,0,0,0,0,0,0,0,0] },
+  { pick: 11, name: "Justin Tootla",         team: "Coli-flower", pts: [ 0, -1, -1,  1,  0, 0,0,0,0,0,0,0,0,0] },
+  { pick: 12, name: "Nana Araba Wilmot",     team: "Cader Tots",  pts: [ 0, -1, -2,  0,  0, 0,0,0,0,0,0,0,0,0] },
+  { pick: 13, name: "Brittany Cochran",      team: "Cader Tots",  pts: [ 0,  0, -1, -2,  0, 0,0,0,0,0,0,0,0,0] },
+  { pick: 14, name: "Day Joseph",            team: "Coli-flower", pts: [-2,  0,  0,  0,  0, 0,0,0,0,0,0,0,0,0] },
+  { pick: 15, name: "Jassi Bindra",          team: "Mom/Dad",     pts: [ 0, -2,  0,  0,  0, 0,0,0,0,0,0,0,0,0] },
+];
+
+const epLabels = ["Ep 1","Ep 2","Ep 3","Ep 4","Ep 5","Ep 6","Ep 7","Ep 8","Ep 9","Ep 10","Ep 11","Ep 12","Ep 13","Ep 14"];
+const numEps = 14;
+const activeCols = 5;
+const eliminatedNames = new Set(["Day Joseph","Jassi Bindra","Nana Araba Wilmot","Brittany Cochran","Rhoda Magbitang"]);
+
+function badgeClass(t) {
+  return t === "Mom/Dad" ? "badge-momdad" : t === "Coli-flower" ? "badge-coli" : "badge-cader";
+}
+function fmtPts(v) {
+  if (v === 0) return '<span class="cell-zero">—</span>';
+  return v > 0 ? `<span class="cell-pos">+${v}</span>` : `<span class="cell-neg">${v}</span>`;
+}
+
+function buildTable() {
+  const tbl = document.getElementById("scorecard");
+  let html = "<thead><tr>";
+  html += `<th class="left">#</th><th class="left">Contestant</th><th class="left">Team</th><th>Total</th>`;
+  for (let e = 0; e < numEps; e++) {
+    const cls = e >= activeCols ? ' class="ep-dim"' : '';
+    html += `<th${cls}>${epLabels[e]}</th>`;
+  }
+  html += "</tr></thead><tbody>";
+  contestants.forEach(c => {
+    const total = c.pts.reduce((a, b) => a + b, 0);
+    const isElim = eliminatedNames.has(c.name);
+    const ns = isElim ? ' style="text-decoration:line-through;color:#aaa;"' : '';
+    const tc = total > 0 ? 'cell-pos' : total < 0 ? 'cell-neg' : 'cell-zero';
+    const ts = total > 0 ? '+' + total : total === 0 ? '0' : total;
+    html += `<tr>`;
+    html += `<td style="color:#bbb;font-size:11px;font-weight:600;">${c.pick}</td>`;
+    html += `<td class="left"${ns}>${c.name}</td>`;
+    html += `<td class="left"><span class="badge ${badgeClass(c.team)}">${c.team}</span></td>`;
+    html += `<td class="${tc}" style="font-weight:700;">${ts}</td>`;
+    for (let e = 0; e < numEps; e++) {
+      const dim = e >= activeCols ? ' style="opacity:0.3;"' : '';
+      html += `<td${dim}>${fmtPts(c.pts[e])}</td>`;
+    }
+    html += "</tr>";
+  });
+  html += "</tbody>";
+  tbl.innerHTML = html;
+}
+
+function buildTeamTotals() {
+  const teams = ["Mom/Dad", "Coli-flower", "Cader Tots"];
+  const colors = { pos: { "Mom/Dad": "#1a6fc4", "Coli-flower": "#1a8a5a", "Cader Tots": "#c1440e" } };
+  const totals = {};
+  teams.forEach(t => totals[t] = 0);
+  contestants.forEach(c => { totals[c.team] += c.pts.reduce((a, b) => a + b, 0); });
+  const sorted = [...teams].sort((a, b) => totals[b] - totals[a]);
+  const rankLabels = [{ label: "1st place", cls: "gold" }, { label: "2nd place", cls: "silver" }, { label: "3rd place", cls: "bronze" }];
+  const container = document.getElementById("teamTotals");
+  let html = "";
+  sorted.forEach((team, i) => {
+    const v = totals[team];
+    const ptStr = v > 0 ? `+${v}` : `${v}`;
+    const scoreCls = v > 0 ? 'pos' : v < 0 ? 'neg' : 'zero';
+    const scoreColor = v > 0 ? colors.pos[team] : v < 0 ? '#c1440e' : '#aaa';
+    const chefs = contestants.filter(c => c.team === team && !eliminatedNames.has(c.name));
+    html += `<div class="team-total-card">
+      <span class="tt-rank-badge ${rankLabels[i].cls}">${rankLabels[i].label}</span>
+      <div class="tt-name">${team}</div>
+      <div class="tt-score ${scoreCls}" style="color:${scoreColor}">${ptStr}</div>
+      <div class="tt-sub">${chefs.length} active chef${chefs.length !== 1 ? 's' : ''}</div>
+    </div>`;
+  });
+  container.innerHTML = html;
+}
+
+buildTable();
+buildTeamTotals();
+</script>
+</body>
+</html>
