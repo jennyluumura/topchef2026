@@ -91,10 +91,10 @@ def call_api():
             "Content-Type": "application/json",
             "x-api-key": API_KEY,
             "anthropic-version": "2023-06-01",
+            "anthropic-beta": "web-search-2025-03-05",
         },
         method="POST"
     )
-
     with urllib.request.urlopen(req) as resp:
         data = json.loads(resp.read().decode("utf-8"))
 
