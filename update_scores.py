@@ -53,7 +53,7 @@ Ep2: Rhoda +2, Laurence +1, Sieger +1, Jennifer +1, Nana -1, Justin -1, Jassi -2
 Ep3: Laurence +2, Anthony +2, Brandon +1, Nana -2, Duyen -1, Rhoda -1, Jonathan -1, Jennifer -1, Oscar -1, Sieger -1, Sherry -1, Justin -1, Brittany -1
 Ep4: Sieger +3, Laurence +1, Sherry +1, Justin +1, Jennifer 0, Anthony -1, Brittany -2
 Ep5: Brandon +1, Anthony +2, Sherry +1, Duyen +1, Laurence -1, Oscar -1, Rhoda -2
-Ep6: No quickfire. Sherry +2 (win round 1), Laurence +2 (win round 2), Brandon +2 (win round 3), Anthony +1 (top), Duyen +1 (top), Jonathan -1 (bottom), Oscar -1 (bottom), Justin -1 (bottom), Jennifer -1 (bottom), Sieger -2 (eliminated)
+Ep6: No quickfire. Laurence +2 (winner), Sherry +1 (top), Brandon +1 (top), Anthony +1 (top), Duyen +1 (top), Jonathan -1 (bottom), Oscar -1 (bottom), Justin -1 (bottom), Jennifer -1 (bottom), Sieger -2 (eliminated)
 
 The user will provide the raw Wikipedia page content. Use it to find any new episodes beyond ep5, score them, and return ONLY raw JSON with no markdown or explanation:
 {
