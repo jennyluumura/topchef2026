@@ -49,7 +49,7 @@ SCORING RULES:
 
 VERIFIED SCORES eps 1-6 (do not change):
 Ep1: Day Joseph -2
-Ep2: Rhoda +2, Laurence +1, Sieger +1, Jennifer +1, Nana -1, Justin -1, Jassi -2
+Ep2: Rhoda Magbitang +2, Laurence Louie +1, Sieger Bayer +1, Jennifer Lee Jackson +1, Nana Araba Wilmot -1, Justin Tootla -1, Jassi Bindra -2
 Ep3: Laurence +2, Anthony +2, Brandon +1, Nana -2, Duyen -1, Rhoda -1, Jonathan -1, Jennifer -1, Oscar -1, Sieger -1, Sherry -1, Justin -1, Brittany -1
 Ep4: Sieger +3, Laurence +1, Sherry +1, Justin +1, Jennifer 0, Anthony -1, Brittany -2
 Ep5: Brandon +1, Anthony +2, Sherry +1, Duyen +1, Laurence -1, Oscar -1, Rhoda -2
@@ -138,12 +138,37 @@ def call_claude(wiki_content):
 def build_contestants_js(data):
     MAX_EPS = 14
     chef_pts = {c["name"]: [0] * MAX_EPS for c in CONTESTANTS}
+
+    # Apply Claude's scores first
     for ep in data["episodes"]:
         idx = ep["ep"] - 1
         if 0 <= idx < MAX_EPS:
             for chef, pts in ep["scores"].items():
                 if chef in chef_pts:
                     chef_pts[chef][idx] = pts
+
+    # Always override with verified scores for eps 1-6 — these never change
+    VERIFIED = {
+        "Day Joseph":            [ -2,  0,  0,  0,  0,  0],
+        "Rhoda Magbitang":       [  0,  2, -1,  0, -2,  0],
+        "Jonathan Dearden":      [  0,  0, -1,  0,  0, -1],
+        "Brandon Dearden":       [  0,  0,  1,  0,  1,  1],
+        "Jennifer Lee Jackson":  [  0,  1, -1,  0,  0, -1],
+        "Anthony Jones":         [  0,  0,  2, -1,  2,  1],
+        "Laurence Louie":        [  0,  1,  2,  1, -1,  2],
+        "Oscar Diaz":            [  0,  0, -1,  0, -1, -1],
+        "Sieger Bayer":          [  0,  1, -1,  3,  0, -2],
+        "Sherry Cardoso":        [  0,  0, -1,  1,  1,  1],
+        "Justin Tootla":         [  0, -1, -1,  1,  0, -1],
+        "Nana Araba Wilmot":     [  0, -1, -2,  0,  0,  0],
+        "Brittany Cochran":      [  0,  0, -1, -2,  0,  0],
+        "Jassi Bindra":          [  0, -2,  0,  0,  0,  0],
+        "Duyen Ha":              [  0,  0, -1,  0,  1,  1],
+    }
+    for chef, scores in VERIFIED.items():
+        if chef in chef_pts:
+            for i, s in enumerate(scores):
+                chef_pts[chef][i] = s
 
     lines = []
     for c in CONTESTANTS:
@@ -178,7 +203,15 @@ def update_html(data):
         html = f.read()
 
     last_ep = data["lastEpisode"]
-    eliminated = data["eliminated"]
+
+    # Always use verified eliminated list — merge Claude's list with known eliminations
+    VERIFIED_ELIMINATED = ["Day Joseph", "Jassi Bindra", "Nana Araba Wilmot", "Brittany Cochran", "Rhoda Magbitang", "Sieger Bayer"]
+    claude_eliminated = data.get("eliminated", [])
+    # Add any new eliminations Claude found beyond ep 6
+    eliminated = list(VERIFIED_ELIMINATED)
+    for chef in claude_eliminated:
+        if chef not in eliminated:
+            eliminated.append(chef)
 
     # --- Update contestants array ---
     new_contestants = build_contestants_js(data)
