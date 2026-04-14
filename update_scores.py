@@ -85,20 +85,21 @@ def fetch_wikipedia():
 
     pages = data["query"]["pages"]
     content = pages[0]["revisions"][0]["content"]
-    # Trim to first 15000 chars to stay within token limits
-    return content[:15000]
+    print(f"Total Wikipedia content: {len(content)} chars")
+    # Take up to 40000 chars to capture the full episode table
+    return content[:40000]
 
 
 def call_claude(wiki_content):
     """Send Wikipedia content to Claude and get scoring JSON back."""
     # Sanitize wiki content - remove control characters that break JSON encoding
     wiki_clean = re.sub(r'[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]', '', wiki_content)
-    # Truncate to avoid token limits
-    wiki_clean = wiki_clean[:10000]
+    # Truncate to avoid token limits - 30000 chars gives plenty of room for episode tables
+    wiki_clean = wiki_clean[:30000]
 
     message = {
         "model": "claude-sonnet-4-20250514",
-        "max_tokens": 3000,
+        "max_tokens": 4000,
         "system": SYSTEM_PROMPT,
         "messages": [{
             "role": "user",
