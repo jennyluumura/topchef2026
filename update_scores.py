@@ -47,12 +47,13 @@ SCORING RULES:
 - Finalist: +3, Season winner: +5
 - EPISODE 3 SPECIAL RULE ONLY: every chef not in top group and not eliminated gets -1
 
-VERIFIED SCORES eps 1-5 (do not change):
+VERIFIED SCORES eps 1-6 (do not change):
 Ep1: Day Joseph -2
 Ep2: Rhoda +2, Laurence +1, Sieger +1, Jennifer +1, Nana -1, Justin -1, Jassi -2
 Ep3: Laurence +2, Anthony +2, Brandon +1, Nana -2, Duyen -1, Rhoda -1, Jonathan -1, Jennifer -1, Oscar -1, Sieger -1, Sherry -1, Justin -1, Brittany -1
 Ep4: Sieger +3, Laurence +1, Sherry +1, Justin +1, Jennifer 0, Anthony -1, Brittany -2
 Ep5: Brandon +1, Anthony +2, Sherry +1, Duyen +1, Laurence -1, Oscar -1, Rhoda -2
+Ep6: No quickfire. Sherry +2 (win round 1), Laurence +2 (win round 2), Brandon +2 (win round 3), Anthony +1 (top), Duyen +1 (top), Jonathan -1 (bottom), Oscar -1 (bottom), Justin -1 (bottom), Jennifer -1 (bottom), Sieger -2 (eliminated)
 
 The user will provide the raw Wikipedia page content. Use it to find any new episodes beyond ep5, score them, and return ONLY raw JSON with no markdown or explanation:
 {
@@ -67,7 +68,7 @@ The user will provide the raw Wikipedia page content. Use it to find any new epi
       "ep": 1,
       "title": "Episode title",
       "date": "Mon DD, YYYY",
-      "html": "Paragraph summary with inline pill spans using these exact formats: <span class=\\"pill pill-qf\\">Quickfire</span> <span class=\\"pill pill-win\\">winning dish</span> <span class=\\"pill pill-top\\">top group</span> <span class=\\"pill pill-bot\\">bottom</span> <span class=\\"pill pill-elim\\">eliminated</span>. Bold chef names with <strong>Name</strong>. Write fluid narrative prose."
+      "html": "Paragraph summary. MUST mention: who won the Quickfire (or note if there was none), the elimination challenge winner, top group chefs, bottom group chefs, and who was eliminated. Use these exact span formats: <span class=\\"pill pill-qf\\">Quickfire</span> <span class=\\"pill pill-win\\">winning dish</span> <span class=\\"pill pill-top\\">top group</span> <span class=\\"pill pill-bot\\">bottom</span> <span class=\\"pill pill-elim\\">eliminated</span>. Bold chef names with <strong>Name</strong>. Write fluid narrative prose with brief context about the challenge and why the eliminated chef went home."
     }
   ]
 }
@@ -198,8 +199,17 @@ def update_html(data):
         html
     )
 
-    # --- Update episode summaries using stable markers ---
-    new_cards = build_summaries_html(data)
+    # --- Update draft order strikethroughs ---
+    for chef in eliminated:
+        # Only update if not already marked eliminated
+        html = re.sub(
+            rf'(<span class="pick-name")( data-chef="{re.escape(chef)}")?(>)({re.escape(chef)})(</span>)',
+            rf'<span class="pick-name eliminated"\2>\4\5',
+            html
+        )
+
+    # --- Append only NEW episode summary cards (preserve existing ones) ---
+    new_summaries = data.get("summaries", [])
     start_marker = '<div class="ep-summaries">'
     end_marker = '  </div>\n\n  <div class="footer">'
 
@@ -207,8 +217,33 @@ def update_html(data):
     end_idx = html.find(end_marker)
 
     if start_idx != -1 and end_idx != -1:
-        new_block = f'{start_marker}\n\n{new_cards}\n\n    </div>\n  </div>\n\n  <div class="footer">'
-        html = html[:start_idx] + new_block + html[end_idx + len(end_marker):]
+        existing_block = html[start_idx:end_idx]
+        new_cards = []
+        for s in new_summaries:
+            ep_marker = f'<span class="ep-num">Ep {s["ep"]}</span>'
+            if ep_marker not in existing_block:
+                # This episode isn't in the HTML yet — add it
+                card = f"""      <div class="ep-card">
+        <div class="ep-card-header">
+          <span class="ep-num">Ep {s['ep']}</span>
+          <span class="ep-title">{s['title']}</span>
+          <span class="ep-date">{s['date']}</span>
+        </div>
+        <div class="ep-card-body">
+          {s['html']}
+        </div>
+      </div>"""
+                new_cards.append(card)
+
+        if new_cards:
+            # Insert new cards just before the closing </div></div>
+            insert_point = html.rfind('    </div>\n  </div>\n\n  <div class="footer">')
+            if insert_point != -1:
+                insertion = "\n\n" + "\n\n".join(new_cards) + "\n\n"
+                html = html[:insert_point] + insertion + html[insert_point:]
+                print(f"   Added {len(new_cards)} new episode summary card(s)")
+        else:
+            print("   No new episode summaries to add")
     else:
         print("⚠️  Warning: could not find ep-summaries markers in HTML")
 
