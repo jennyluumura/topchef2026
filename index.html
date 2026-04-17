@@ -374,7 +374,7 @@
           <span class="ep-date">Apr 13, 2026</span>
         </div>
         <div class="ep-card-body">
-          No <span class="pill pill-qf">Quickfire</span> this week — chefs went straight into an all-night whole hog barbecue elimination. Split into two teams of five, the Red Team (Anthony, Laurence, Brandon, Sherry, Duyen) faced off against the Gray Team (Sieger, Jonathan, Oscar, Justin, Jennifer) across five head-to-head rounds judged by local pitmasters. The Red Team swept the first three rounds: <strong>Sherry Cardoso</strong> won Round 1 (shoulder), <strong>Laurence Louie</strong> won Round 2 (loin), and <strong>Brandon Dearden</strong> clinched Round 3 (belly) to seal the team victory. <strong>Laurence</strong> was named the overall <span class="pill pill-win">winning dish</span>, with <strong>Anthony Jones</strong> and <strong>Duyen Ha</strong> rounding out the <span class="pill pill-top">top group</span>. The entire Gray Team landed in the <span class="pill pill-bot">bottom</span>. <strong>Sieger Bayer</strong> was <span class="pill pill-elim">eliminated</span> after his pork loin came out dry — a tough exit for the Ep 4 winner who refused to stray from traditional whole hog technique.
+          No <span class="pill pill-qf">Quickfire</span> this week — chefs went straight into an all-night whole hog barbecue elimination. Split into two teams of five, the Red Team (Anthony, Laurence, Brandon, Sherry, Duyen) faced off against the Gray Team (Sieger, Jonathan, Oscar, Justin, Jennifer) across five head-to-head rounds judged by local pitmasters. The Red Team swept the first three rounds: <strong>Sherry Cardoso</strong> won Round 1 (shoulder) and <strong>Brandon Dearden</strong> won Round 3 (belly), both landing in the <span class="pill pill-top">top group</span> (+1 each). <strong>Laurence Louie</strong> won Round 2 (loin) and was named the overall <span class="pill pill-win">winning dish</span> (+2). On the Gray Team, <strong>Oscar Diaz</strong> earned +1 for winning the s'mores challenge, while <strong>Justin Tootla</strong> and <strong>Jonathan Dearden</strong> lost their rounds and landed in the <span class="pill pill-bot">bottom</span> (−1 each). <strong>Sieger Bayer</strong> was <span class="pill pill-elim">eliminated</span> after his pork loin came out dry — a tough exit for the Ep 4 winner who refused to stray from traditional whole hog technique.
         </div>
       </div>
 
@@ -382,33 +382,35 @@
   </div>
 
   <div class="footer">
-    Updated through Episode 6 &nbsp;·&nbsp; Top Chef: Carolinas Season 23 &nbsp;·&nbsp; Last updated April 14, 2026</div>
+    Updated through Episode 6 &nbsp;·&nbsp; Top Chef: Carolinas Season 23 &nbsp;·&nbsp; Last updated April 14, 2026
+  </div>
 
 </div>
 
 <script>
 const contestants = [
-  { pick: 1 , name: "Duyen Ha",               team: "Cader Tots",  pts: [0, 0, -1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0] },
-  { pick: 2 , name: "Rhoda Magbitang",        team: "Coli-flower", pts: [0, 2, -1, 0, -2, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
-  { pick: 3 , name: "Jonathan Dearden",       team: "Mom/Dad",     pts: [0, 0, -1, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0] },
-  { pick: 4 , name: "Brandon Dearden",        team: "Mom/Dad",     pts: [0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0] },
-  { pick: 5 , name: "Jennifer Lee Jackson",   team: "Coli-flower", pts: [0, 1, -1, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0] },
-  { pick: 6 , name: "Anthony Jones",          team: "Cader Tots",  pts: [0, 0, 2, -1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0] },
-  { pick: 7 , name: "Laurence Louie",         team: "Cader Tots",  pts: [0, 1, 2, 1, -1, 2, 0, 0, 0, 0, 0, 0, 0, 0] },
-  { pick: 8 , name: "Oscar Diaz",             team: "Coli-flower", pts: [0, 0, -1, 0, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0] },
-  { pick: 9 , name: "Sieger Bayer",           team: "Mom/Dad",     pts: [0, 1, -1, 3, 0, -2, 0, 0, 0, 0, 0, 0, 0, 0] },
-  { pick: 10, name: "Sherry Cardoso",         team: "Mom/Dad",     pts: [0, 0, -1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0] },
-  { pick: 11, name: "Justin Tootla",          team: "Coli-flower", pts: [0, -1, -1, 1, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0] },
-  { pick: 12, name: "Nana Araba Wilmot",      team: "Cader Tots",  pts: [0, -1, -2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
-  { pick: 13, name: "Brittany Cochran",       team: "Cader Tots",  pts: [0, 0, -1, -2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
-  { pick: 14, name: "Day Joseph",             team: "Coli-flower", pts: [-2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
-  { pick: 15, name: "Jassi Bindra",           team: "Mom/Dad",     pts: [0, -2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
+  //                                          ep1  ep2  ep3  ep4  ep5  ep6
+  { pick: 1,  name: "Duyen Ha",             team: "Cader Tots",  pts: [ 0,  0, -1,  0,  1,  0, 0,0,0,0,0,0,0,0] },
+  { pick: 2,  name: "Rhoda Magbitang",       team: "Coli-flower", pts: [ 0,  2, -1,  0, -2,  0, 0,0,0,0,0,0,0,0] },
+  { pick: 3,  name: "Jonathan Dearden",      team: "Mom/Dad",     pts: [ 0,  0, -1,  0,  0, -1, 0,0,0,0,0,0,0,0] },
+  { pick: 4,  name: "Brandon Dearden",       team: "Mom/Dad",     pts: [ 0,  0,  1,  0,  1,  1, 0,0,0,0,0,0,0,0] },
+  { pick: 5,  name: "Jennifer Lee Jackson",  team: "Coli-flower", pts: [ 0,  1, -1,  0,  0,  0, 0,0,0,0,0,0,0,0] },
+  { pick: 6,  name: "Anthony Jones",         team: "Cader Tots",  pts: [ 0,  0,  2, -1,  2,  0, 0,0,0,0,0,0,0,0] },
+  { pick: 7,  name: "Laurence Louie",        team: "Cader Tots",  pts: [ 0,  1,  2,  1, -1,  2, 0,0,0,0,0,0,0,0] },
+  { pick: 8,  name: "Oscar Diaz",            team: "Coli-flower", pts: [ 0,  0, -1,  0, -1,  1, 0,0,0,0,0,0,0,0] },
+  { pick: 9,  name: "Sieger Bayer",          team: "Mom/Dad",     pts: [ 0,  1, -1,  3,  0, -2, 0,0,0,0,0,0,0,0] },
+  { pick: 10, name: "Sherry Cardoso",        team: "Mom/Dad",     pts: [ 0,  0, -1,  1,  1,  1, 0,0,0,0,0,0,0,0] },
+  { pick: 11, name: "Justin Tootla",         team: "Coli-flower", pts: [ 0, -1, -1,  1,  0, -1, 0,0,0,0,0,0,0,0] },
+  { pick: 12, name: "Nana Araba Wilmot",     team: "Cader Tots",  pts: [ 0, -1, -2,  0,  0,  0, 0,0,0,0,0,0,0,0] },
+  { pick: 13, name: "Brittany Cochran",      team: "Cader Tots",  pts: [ 0,  0, -1, -2,  0,  0, 0,0,0,0,0,0,0,0] },
+  { pick: 14, name: "Day Joseph",            team: "Coli-flower", pts: [-2,  0,  0,  0,  0,  0, 0,0,0,0,0,0,0,0] },
+  { pick: 15, name: "Jassi Bindra",          team: "Mom/Dad",     pts: [ 0, -2,  0,  0,  0,  0, 0,0,0,0,0,0,0,0] },
 ];
 
 const epLabels = ["Ep 1","Ep 2","Ep 3","Ep 4","Ep 5","Ep 6","Ep 7","Ep 8","Ep 9","Ep 10","Ep 11","Ep 12","Ep 13","Ep 14"];
 const numEps = 14;
 const activeCols = 6;
-const eliminatedNames = new Set(["Day Joseph", "Jassi Bindra", "Nana Araba Wilmot", "Brittany Cochran", "Rhoda Magbitang", "Sieger Bayer"]);
+const eliminatedNames = new Set(["Day Joseph","Jassi Bindra","Nana Araba Wilmot","Brittany Cochran","Rhoda Magbitang","Sieger Bayer"]);
 
 function badgeClass(t) {
   return t === "Mom/Dad" ? "badge-momdad" : t === "Coli-flower" ? "badge-coli" : "badge-cader";
