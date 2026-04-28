@@ -241,7 +241,7 @@
       <div class="team-card team-momdad">
         <div class="team-name">Mom/Dad</div>
         <div class="pick-row"><span class="pick-num">#3</span><span class="pick-name">Jonathan Dearden</span></div>
-        <div class="pick-row"><span class="pick-num">#4</span><span class="pick-name">Brandon Dearden</span></div>
+        <div class="pick-row"><span class="pick-num">#4</span><span class="pick-name eliminated">Brandon Dearden</span></div>
         <div class="pick-row"><span class="pick-num">#9</span><span class="pick-name eliminated">Sieger Bayer</span></div>
         <div class="pick-row"><span class="pick-num">#10</span><span class="pick-name">Sherry Cardoso</span></div>
         <div class="pick-row"><span class="pick-num">#15</span><span class="pick-name eliminated">Jassi Bindra</span></div>
@@ -391,26 +391,39 @@
         </div>
       </div>
 
+
+
+      <div class="ep-card">
+        <div class="ep-card-header">
+          <span class="ep-num">Ep 8</span>
+          <span class="ep-title">Medical Emergency</span>
+          <span class="ep-date">April 27, 2026</span>
+        </div>
+        <div class="ep-card-body">
+          There was no <span class="pill pill-qf">Quickfire</span> challenge due to a medical emergency involving <strong>Jennifer Lee Jackson</strong>. The elimination challenge proceeded with the remaining chefs, where <strong>Duyen Ha</strong> finally broke through with her <span class="pill pill-win">winning dish</span>. <strong>Laurence Louie</strong> and <strong>Sherry Cardoso</strong> continued their strong performance in the <span class="pill pill-top">top group</span>. <strong>Sieger Bayer</strong> returned to competition after <strong>Jennifer Lee Jackson</strong>'s medical removal and <strong>Justin Tootla</strong> declining to return, but struggled in the <span class="pill pill-bot">bottom</span>. <strong>Brandon Dearden</strong> was <span class="pill pill-elim">eliminated</span> for his disappointing dish, ending his impressive run in the competition.
+        </div>
+      </div>
+
     </div>
   </div>
 
   <div class="footer">
-    Updated through Episode 7 &nbsp;·&nbsp; Top Chef: Carolinas Season 23 &nbsp;·&nbsp; Last updated April 21, 2026</div>
+    Updated through Episode 8 &nbsp;·&nbsp; Top Chef: Carolinas Season 23 &nbsp;·&nbsp; Last updated April 28, 2026</div>
 
 </div>
 
 <script>
 const contestants = [
-  { pick: 1 , name: "Duyen Ha",               team: "Cader Tots",  pts: [0, 0, -1, 0, 1, 0, -1, 0, 0, 0, 0, 0, 0, 0] },
+  { pick: 1 , name: "Duyen Ha",               team: "Cader Tots",  pts: [0, 0, -1, 0, 1, 0, 0, 2, 0, 0, 0, 0, 0, 0] },
   { pick: 2 , name: "Rhoda Magbitang",        team: "Coli-flower", pts: [0, 2, -1, 0, -2, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
   { pick: 3 , name: "Jonathan Dearden",       team: "Mom/Dad",     pts: [0, 0, -1, 0, 0, -1, 1, 0, 0, 0, 0, 0, 0, 0] },
-  { pick: 4 , name: "Brandon Dearden",        team: "Mom/Dad",     pts: [0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0] },
+  { pick: 4 , name: "Brandon Dearden",        team: "Mom/Dad",     pts: [0, 0, 1, 0, 1, 1, 1, -2, 0, 0, 0, 0, 0, 0] },
   { pick: 5 , name: "Jennifer Lee Jackson",   team: "Coli-flower", pts: [0, 1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
   { pick: 6 , name: "Anthony Jones",          team: "Cader Tots",  pts: [0, 0, 2, -1, 2, 0, 3, 0, 0, 0, 0, 0, 0, 0] },
-  { pick: 7 , name: "Laurence Louie",         team: "Cader Tots",  pts: [0, 1, 2, 1, -1, 2, 1, 0, 0, 0, 0, 0, 0, 0] },
+  { pick: 7 , name: "Laurence Louie",         team: "Cader Tots",  pts: [0, 1, 2, 1, -1, 2, 1, 1, 0, 0, 0, 0, 0, 0] },
   { pick: 8 , name: "Oscar Diaz",             team: "Coli-flower", pts: [0, 0, -1, 0, -1, 1, -1, 0, 0, 0, 0, 0, 0, 0] },
-  { pick: 9 , name: "Sieger Bayer",           team: "Mom/Dad",     pts: [0, 1, -1, 3, 0, -2, 0, 0, 0, 0, 0, 0, 0, 0] },
-  { pick: 10, name: "Sherry Cardoso",         team: "Mom/Dad",     pts: [0, 0, -1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0] },
+  { pick: 9 , name: "Sieger Bayer",           team: "Mom/Dad",     pts: [0, 1, -1, 3, 0, -2, 0, -1, 0, 0, 0, 0, 0, 0] },
+  { pick: 10, name: "Sherry Cardoso",         team: "Mom/Dad",     pts: [0, 0, -1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0] },
   { pick: 11, name: "Justin Tootla",          team: "Coli-flower", pts: [0, -1, -1, 1, 0, -1, -2, 0, 0, 0, 0, 0, 0, 0] },
   { pick: 12, name: "Nana Araba Wilmot",      team: "Cader Tots",  pts: [0, -1, -2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
   { pick: 13, name: "Brittany Cochran",       team: "Cader Tots",  pts: [0, 0, -1, -2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
@@ -420,8 +433,8 @@ const contestants = [
 
 const epLabels = ["Ep 1","Ep 2","Ep 3","Ep 4","Ep 5","Ep 6","Ep 7","Ep 8","Ep 9","Ep 10","Ep 11","Ep 12","Ep 13","Ep 14"];
 const numEps = 14;
-const activeCols = 7;
-const eliminatedNames = new Set(["Day Joseph", "Jassi Bindra", "Nana Araba Wilmot", "Brittany Cochran", "Rhoda Magbitang", "Sieger Bayer", "Justin Tootla"]);
+const activeCols = 8;
+const eliminatedNames = new Set(["Day Joseph", "Jassi Bindra", "Nana Araba Wilmot", "Brittany Cochran", "Rhoda Magbitang", "Sieger Bayer", "Justin Tootla", "Brandon Dearden"]);
 
 function badgeClass(t) {
   return t === "Mom/Dad" ? "badge-momdad" : t === "Coli-flower" ? "badge-coli" : "badge-cader";
