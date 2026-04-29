@@ -206,7 +206,8 @@ def update_html(data):
     last_ep = data["lastEpisode"]
 
     # Always use verified eliminated list — merge Claude's list with known eliminations
-    VERIFIED_ELIMINATED = ["Day Joseph", "Jassi Bindra", "Nana Araba Wilmot", "Brittany Cochran", "Rhoda Magbitang", "Justin Tootla", "Jennifer Lee Jackson", "Brandon Dearden"]
+    VERIFIED_ELIMINATED = ["Day Joseph", "Jassi Bindra", "Nana Araba Wilmot", "Brittany Cochran", "Justin Tootla", "Jennifer Lee Jackson", "Brandon Dearden"]
+    # Note: Sieger Bayer and Rhoda Magbitang were eliminated but returned via Last Chance Kitchen
     claude_eliminated = data.get("eliminated", [])
     # Add any new eliminations Claude found beyond ep 6
     eliminated = list(VERIFIED_ELIMINATED)
