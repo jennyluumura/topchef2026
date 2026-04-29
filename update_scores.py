@@ -53,7 +53,8 @@ Ep2: Rhoda Magbitang +2, Laurence Louie +1, Sieger Bayer +1, Jennifer Lee Jackso
 Ep3: Laurence +2, Anthony +2, Brandon +1, Nana -2, Duyen -1, Rhoda -1, Jonathan -1, Jennifer -1, Oscar -1, Sieger -1, Sherry -1, Justin -1, Brittany -1
 Ep4: Sieger +3, Laurence +1, Sherry +1, Justin +1, Jennifer 0, Anthony -1, Brittany -2
 Ep5: Brandon +1, Anthony +2, Sherry +1, Duyen +1, Laurence -1, Oscar -1, Rhoda -2
-Ep6: No quickfire. Laurence +2 (winner), Sherry +1 (top), Brandon +1 (top), Oscar +1 (smores challenge), Jonathan -1 (bottom), Justin -1 (bottom), Sieger -2 (eliminated)
+Ep7: Anthony +1 (QF + elim win combined = +2 wait — QF win +1, elim win +2), Laurence +1 (top), Sherry +1 (top), Brandon +1 (top + QF), Jonathan -1 (bottom), Oscar -1 (bottom), Duyen -1 (bottom), Justin -2 (eliminated)
+Ep8: No quickfire. Duyen +2 (winner), Laurence +1 (top), Sherry +1 (top), Sieger -1 (bottom), Brandon -2 (eliminated). Jennifer Lee Jackson withdrew for medical reasons.
 
 The user will provide the raw Wikipedia page content. Use it to find any new episodes beyond ep5, score them, and return ONLY raw JSON with no markdown or explanation:
 {
@@ -149,21 +150,21 @@ def build_contestants_js(data):
 
     # Always override with verified scores for eps 1-6 — these never change
     VERIFIED = {
-        "Day Joseph":            [ -2,  0,  0,  0,  0,  0],
-        "Rhoda Magbitang":       [  0,  2, -1,  0, -2,  0],
-        "Jonathan Dearden":      [  0,  0, -1,  0,  0, -1],
-        "Brandon Dearden":       [  0,  0,  1,  0,  1,  1],
-        "Jennifer Lee Jackson":  [  0,  1, -1,  0,  0,  0],
-        "Anthony Jones":         [  0,  0,  2, -1,  2,  0],
-        "Laurence Louie":        [  0,  1,  2,  1, -1,  2],
-        "Oscar Diaz":            [  0,  0, -1,  0, -1,  1],
-        "Sieger Bayer":          [  0,  1, -1,  3,  0, -2],
-        "Sherry Cardoso":        [  0,  0, -1,  1,  1,  1],
-        "Justin Tootla":         [  0, -1, -1,  1,  0, -1],
-        "Nana Araba Wilmot":     [  0, -1, -2,  0,  0,  0],
-        "Brittany Cochran":      [  0,  0, -1, -2,  0,  0],
-        "Jassi Bindra":          [  0, -2,  0,  0,  0,  0],
-        "Duyen Ha":              [  0,  0, -1,  0,  1,  0],
+        "Day Joseph":            [ -2,  0,  0,  0,  0,  0,  0,  0],
+        "Rhoda Magbitang":       [  0,  2, -1,  0, -2,  0,  0,  0],
+        "Jonathan Dearden":      [  0,  0, -1,  0,  0, -1, -1,  0],
+        "Brandon Dearden":       [  0,  0,  1,  0,  1,  1,  1, -2],
+        "Jennifer Lee Jackson":  [  0,  1, -1,  0,  0,  0,  0,  0],
+        "Anthony Jones":         [  0,  0,  2, -1,  2,  0,  1,  0],
+        "Laurence Louie":        [  0,  1,  2,  1, -1,  2,  1,  1],
+        "Oscar Diaz":            [  0,  0, -1,  0, -1,  1, -1,  0],
+        "Sieger Bayer":          [  0,  1, -1,  3,  0, -2,  0, -1],
+        "Sherry Cardoso":        [  0,  0, -1,  1,  1,  1,  1,  1],
+        "Justin Tootla":         [  0, -1, -1,  1,  0, -1, -2,  0],
+        "Nana Araba Wilmot":     [  0, -1, -2,  0,  0,  0,  0,  0],
+        "Brittany Cochran":      [  0,  0, -1, -2,  0,  0,  0,  0],
+        "Jassi Bindra":          [  0, -2,  0,  0,  0,  0,  0,  0],
+        "Duyen Ha":              [  0,  0, -1,  0,  1,  0, -1,  2],
     }
     for chef, scores in VERIFIED.items():
         if chef in chef_pts:
@@ -205,7 +206,7 @@ def update_html(data):
     last_ep = data["lastEpisode"]
 
     # Always use verified eliminated list — merge Claude's list with known eliminations
-    VERIFIED_ELIMINATED = ["Day Joseph", "Jassi Bindra", "Nana Araba Wilmot", "Brittany Cochran", "Rhoda Magbitang", "Sieger Bayer"]
+    VERIFIED_ELIMINATED = ["Day Joseph", "Jassi Bindra", "Nana Araba Wilmot", "Brittany Cochran", "Rhoda Magbitang", "Justin Tootla", "Jennifer Lee Jackson", "Brandon Dearden"]
     claude_eliminated = data.get("eliminated", [])
     # Add any new eliminations Claude found beyond ep 6
     eliminated = list(VERIFIED_ELIMINATED)
