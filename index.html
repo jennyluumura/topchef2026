@@ -249,7 +249,7 @@
       </div>
       <div class="team-card team-coli">
         <div class="team-name">Coli-flower</div>
-        <div class="pick-row"><span class="pick-num">#2</span><span class="pick-name">Rhoda Magbitang</span><span class="pick-lck">LCK</span></div>
+        <div class="pick-row"><span class="pick-num">#2</span><span class="pick-name eliminated">Rhoda Magbitang</span><span class="pick-lck">LCK</span></div>
         <div class="pick-row"><span class="pick-num">#5</span><span class="pick-name eliminated">Jennifer Lee Jackson</span></div>
         <div class="pick-row"><span class="pick-num">#8</span><span class="pick-name eliminated">Oscar Diaz</span></div>
         <div class="pick-row"><span class="pick-num">#11</span><span class="pick-name eliminated">Justin Tootla</span></div>
@@ -416,35 +416,33 @@
   </div>
 
   <div class="footer">
-    Updated through Episode 9 &nbsp;·&nbsp; Top Chef: Carolinas Season 23 &nbsp;·&nbsp; Last updated May 5, 2026
-  </div>
+    Updated through Episode 8 &nbsp;·&nbsp; Top Chef: Carolinas Season 23 &nbsp;·&nbsp; Last updated May 11, 2026</div>
 
 </div>
 
 <script>
 const contestants = [
-  //                                          ep1  ep2  ep3  ep4  ep5  ep6  ep7  ep8  ep9
-  { pick: 1,  name: "Duyen Ha",             team: "Cader Tots",  pts: [ 0,  0, -1,  0,  1,  0, -1,  2,  0, 0,0,0,0,0] },
-  { pick: 2,  name: "Rhoda Magbitang",       team: "Coli-flower", pts: [ 0,  2, -1,  0, -2,  0,  0,  0, -1, 0,0,0,0,0] },
-  { pick: 3,  name: "Jonathan Dearden",      team: "Mom/Dad",     pts: [ 0,  0, -1,  0,  0, -1,  0, -1,  1, 0,0,0,0,0] },
-  { pick: 4,  name: "Brandon Dearden",       team: "Mom/Dad",     pts: [ 0,  0,  1,  0,  1,  1,  2, -2,  0, 0,0,0,0,0] },
-  { pick: 5,  name: "Jennifer Lee Jackson",  team: "Coli-flower", pts: [ 0,  1, -1,  0,  0,  0,  0,  0,  0, 0,0,0,0,0] },
-  { pick: 6,  name: "Anthony Jones",         team: "Cader Tots",  pts: [ 0,  0,  2, -1,  2,  0,  3,  1,  1, 0,0,0,0,0] },
-  { pick: 7,  name: "Laurence Louie",        team: "Cader Tots",  pts: [ 0,  1,  2,  1, -1,  2,  1,  1,  2, 0,0,0,0,0] },
-  { pick: 8,  name: "Oscar Diaz",            team: "Coli-flower", pts: [ 0,  0, -1,  0, -1,  1, -1, -1, -2, 0,0,0,0,0] },
-  { pick: 9,  name: "Sieger Bayer",          team: "Mom/Dad",     pts: [ 0,  1, -1,  3,  0, -2,  0, -1,  0, 0,0,0,0,0] },
-  { pick: 10, name: "Sherry Cardoso",        team: "Mom/Dad",     pts: [ 0,  0, -1,  1,  1,  1,  1,  1,  0, 0,0,0,0,0] },
-  { pick: 11, name: "Justin Tootla",         team: "Coli-flower", pts: [ 0, -1, -1,  1,  0, -1, -2,  0,  0, 0,0,0,0,0] },
-  { pick: 12, name: "Nana Araba Wilmot",     team: "Cader Tots",  pts: [ 0, -1, -2,  0,  0,  0,  0,  0,  0, 0,0,0,0,0] },
-  { pick: 13, name: "Brittany Cochran",      team: "Cader Tots",  pts: [ 0,  0, -1, -2,  0,  0,  0,  0,  0, 0,0,0,0,0] },
-  { pick: 14, name: "Day Joseph",            team: "Coli-flower", pts: [-2,  0,  0,  0,  0,  0,  0,  0,  0, 0,0,0,0,0] },
-  { pick: 15, name: "Jassi Bindra",          team: "Mom/Dad",     pts: [ 0, -2,  0,  0,  0,  0,  0,  0,  0, 0,0,0,0,0] },
+  { pick: 1 , name: "Duyen Ha",               team: "Cader Tots",  pts: [0, 0, -1, 0, 1, 0, -1, 2, 0, 0, 0, 0, 0, 0] },
+  { pick: 2 , name: "Rhoda Magbitang",        team: "Coli-flower", pts: [0, 2, -1, 0, -2, 0, 0, 0, -1, 0, 0, 0, 0, 0] },
+  { pick: 3 , name: "Jonathan Dearden",       team: "Mom/Dad",     pts: [0, 0, -1, 0, 0, -1, 0, -1, 1, 0, 0, 0, 0, 0] },
+  { pick: 4 , name: "Brandon Dearden",        team: "Mom/Dad",     pts: [0, 0, 1, 0, 1, 1, 2, -2, 0, 0, 0, 0, 0, 0] },
+  { pick: 5 , name: "Jennifer Lee Jackson",   team: "Coli-flower", pts: [0, 1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
+  { pick: 6 , name: "Anthony Jones",          team: "Cader Tots",  pts: [0, 0, 2, -1, 2, 0, 3, 1, 1, 0, 0, 0, 0, 0] },
+  { pick: 7 , name: "Laurence Louie",         team: "Cader Tots",  pts: [0, 1, 2, 1, -1, 2, 1, 1, 2, 0, 0, 0, 0, 0] },
+  { pick: 8 , name: "Oscar Diaz",             team: "Coli-flower", pts: [0, 0, -1, 0, -1, 1, -1, -1, -2, 0, 0, 0, 0, 0] },
+  { pick: 9 , name: "Sieger Bayer",           team: "Mom/Dad",     pts: [0, 1, -1, 3, 0, -2, 0, -1, 0, 0, 0, 0, 0, 0] },
+  { pick: 10, name: "Sherry Cardoso",         team: "Mom/Dad",     pts: [0, 0, -1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0] },
+  { pick: 11, name: "Justin Tootla",          team: "Coli-flower", pts: [0, -1, -1, 1, 0, -1, -2, 0, 0, 0, 0, 0, 0, 0] },
+  { pick: 12, name: "Nana Araba Wilmot",      team: "Cader Tots",  pts: [0, -1, -2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
+  { pick: 13, name: "Brittany Cochran",       team: "Cader Tots",  pts: [0, 0, -1, -2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
+  { pick: 14, name: "Day Joseph",             team: "Coli-flower", pts: [-2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
+  { pick: 15, name: "Jassi Bindra",           team: "Mom/Dad",     pts: [0, -2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
 ];
 
 const epLabels = ["Ep 1","Ep 2","Ep 3","Ep 4","Ep 5","Ep 6","Ep 7","Ep 8","Ep 9","Ep 10","Ep 11","Ep 12","Ep 13","Ep 14"];
 const numEps = 14;
-const activeCols = 9;
-const eliminatedNames = new Set(["Day Joseph","Jassi Bindra","Nana Araba Wilmot","Brittany Cochran","Justin Tootla","Jennifer Lee Jackson","Brandon Dearden","Oscar Diaz"]);
+const activeCols = 8;
+const eliminatedNames = new Set(["Day Joseph", "Jassi Bindra", "Nana Araba Wilmot", "Brittany Cochran", "Justin Tootla", "Jennifer Lee Jackson", "Brandon Dearden", "Oscar Diaz", "Rhoda Magbitang"]);
 
 function badgeClass(t) {
   return t === "Mom/Dad" ? "badge-momdad" : t === "Coli-flower" ? "badge-coli" : "badge-cader";
