@@ -150,21 +150,21 @@ def build_contestants_js(data):
 
     # Always override with verified scores for eps 1-6 — these never change
     VERIFIED = {
-        "Day Joseph":            [ -2,  0,  0,  0,  0,  0,  0,  0],
-        "Rhoda Magbitang":       [  0,  2, -1,  0, -2,  0,  0,  0],
-        "Jonathan Dearden":      [  0,  0, -1,  0,  0, -1,  0, -1],
-        "Brandon Dearden":       [  0,  0,  1,  0,  1,  1,  2, -2],
-        "Jennifer Lee Jackson":  [  0,  1, -1,  0,  0,  0,  0,  0],
-        "Anthony Jones":         [  0,  0,  2, -1,  2,  0,  3,  1],
-        "Laurence Louie":        [  0,  1,  2,  1, -1,  2,  1,  1],
-        "Oscar Diaz":            [  0,  0, -1,  0, -1,  1, -1, -1],
-        "Sieger Bayer":          [  0,  1, -1,  3,  0, -2,  0, -1],
-        "Sherry Cardoso":        [  0,  0, -1,  1,  1,  1,  1,  1],
-        "Justin Tootla":         [  0, -1, -1,  1,  0, -1, -2,  0],
-        "Nana Araba Wilmot":     [  0, -1, -2,  0,  0,  0,  0,  0],
-        "Brittany Cochran":      [  0,  0, -1, -2,  0,  0,  0,  0],
-        "Jassi Bindra":          [  0, -2,  0,  0,  0,  0,  0,  0],
-        "Duyen Ha":              [  0,  0, -1,  0,  1,  0, -1,  2],
+        "Day Joseph":            [ -2,  0,  0,  0,  0,  0,  0,  0,  0],
+        "Rhoda Magbitang":       [  0,  2, -1,  0, -2,  0,  0,  0, -1],
+        "Jonathan Dearden":      [  0,  0, -1,  0,  0, -1,  0, -1,  1],
+        "Brandon Dearden":       [  0,  0,  1,  0,  1,  1,  2, -2,  0],
+        "Jennifer Lee Jackson":  [  0,  1, -1,  0,  0,  0,  0,  0,  0],
+        "Anthony Jones":         [  0,  0,  2, -1,  2,  0,  3,  1,  1],
+        "Laurence Louie":        [  0,  1,  2,  1, -1,  2,  1,  1,  2],
+        "Oscar Diaz":            [  0,  0, -1,  0, -1,  1, -1, -1, -2],
+        "Sieger Bayer":          [  0,  1, -1,  3,  0, -2,  0, -1,  0],
+        "Sherry Cardoso":        [  0,  0, -1,  1,  1,  1,  1,  1,  0],
+        "Justin Tootla":         [  0, -1, -1,  1,  0, -1, -2,  0,  0],
+        "Nana Araba Wilmot":     [  0, -1, -2,  0,  0,  0,  0,  0,  0],
+        "Brittany Cochran":      [  0,  0, -1, -2,  0,  0,  0,  0,  0],
+        "Jassi Bindra":          [  0, -2,  0,  0,  0,  0,  0,  0,  0],
+        "Duyen Ha":              [  0,  0, -1,  0,  1,  0, -1,  2,  0],
     }
     for chef, scores in VERIFIED.items():
         if chef in chef_pts:
@@ -206,7 +206,7 @@ def update_html(data):
     last_ep = data["lastEpisode"]
 
     # Always use verified eliminated list — merge Claude's list with known eliminations
-    VERIFIED_ELIMINATED = ["Day Joseph", "Jassi Bindra", "Nana Araba Wilmot", "Brittany Cochran", "Justin Tootla", "Jennifer Lee Jackson", "Brandon Dearden"]
+    VERIFIED_ELIMINATED = ["Day Joseph", "Jassi Bindra", "Nana Araba Wilmot", "Brittany Cochran", "Justin Tootla", "Jennifer Lee Jackson", "Brandon Dearden", "Oscar Diaz"]
     # Note: Sieger Bayer and Rhoda Magbitang were eliminated but returned via Last Chance Kitchen
     claude_eliminated = data.get("eliminated", [])
     # Add any new eliminations Claude found beyond ep 6
